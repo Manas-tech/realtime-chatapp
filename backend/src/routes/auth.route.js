@@ -1,12 +1,19 @@
 import express from "express";
-import { signup, login, logout } from "../controllers/auth.controller.js"; // Assuming your controllers are correctly set up
+import { 
+ signup, 
+ login, 
+ logout, 
+ updateProfile, 
+ checkAuth 
+} from "../controllers/auth.controller.js";
+import { protectRoute } from "../middleware/auth.middleware.js";
 
 const router = express.Router();
 
-// Use POST for signup and login since they require request bodies
-router.post("/signup", signup);   // Handle POST request for signup
-router.post("/login", login);     // Handle POST request for login
-router.post("/logout", logout);    // GET request for logout (usually no body needed)
+router.post("/signup", signup);
+router.post("/login", login);
+router.post("/logout", logout);
 
-// Export the router
+router.get("/check", protectRoute, checkAuth);
+
 export default router;

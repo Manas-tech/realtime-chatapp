@@ -2,27 +2,26 @@ import express from "express";
 import dotenv from "dotenv";
 import { connectDB } from "./lib/db.js";
 import authRoutes from "./routes/auth.route.js";
+import messageRoutes from "./routes/message.route.js";
+import cookieParser from "cookie-parser";
 
 dotenv.config();
 const app = express();
-const PORT = process.env.PORT || 5000; // Default to 5000 if PORT is not set
+const PORT = process.env.PORT || 5000;
 
-// Connect to the database
 connectDB();
 
-// Middleware to parse JSON request bodies
-app.use(express.json()); // This is the middleware for parsing JSON bodies
+app.use(express.json());
+app.use(cookieParser());
 
-// Debugging middleware to log incoming requests (optional)
 app.use("/api/auth", (req, res, next) => {
-  console.log(`Incoming request: ${req.method} ${req.originalUrl}`);
-  next();
+ console.log(`${req.method} ${req.originalUrl}`);
+ next();
 });
 
-// Register the authentication routes
 app.use("/api/auth", authRoutes);
+app.use("/api/message", messageRoutes);
 
-// Start the server
 app.listen(PORT, () => {
-  console.log(`Server is running on port: ${PORT}`);
+ console.log(`Server running on port: ${PORT}`);
 });
