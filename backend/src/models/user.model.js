@@ -16,7 +16,7 @@ const userSchema = new mongoose.Schema(
       required: true,
       minlength: 6,
     },
-    profilepic: {
+    profilepic: { // Ensure this matches the field name used in the controller
       type: String,
       default: "",
     },
@@ -24,7 +24,6 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// The model name should match your export statement
 const User = mongoose.model("User", userSchema);
 
 export default User;
